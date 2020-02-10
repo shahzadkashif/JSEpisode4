@@ -136,7 +136,19 @@ function mostProlificAuthor(authors) {
  * BONUS: REMOVE DUPLICATE BOOKS
  ****************************************************************/
 function relatedBooks(bookId, authors, books) {
-  // Your code goes here
+  let Numb = getBookById(bookId, books).authors;
+  let author;
+  let x;
+  Numb.forEach(Au => {
+    author = getAuthorByName(Au.name, authors);
+    if (x == null) x = titlesByAuthorName(author.name, authors, books);
+    else {
+      let titles = titlesByAuthorName(author.name, authors, books);
+      titles.forEach(title => x.push(title));
+    }
+  });
+  //x = [...new Set(x)];
+  return x;
 }
 
 /**************************************************************
@@ -146,7 +158,35 @@ function relatedBooks(bookId, authors, books) {
  *   co-authored the greatest number of books
  ****************************************************************/
 function friendliestAuthor(authors) {
-  // Your code goes here
+  let count = 0;
+  let OldCount = 0;
+  let MyAuthor;
+  let OldBooks = [];
+
+  authors.forEach(author => {
+    author.books.forEach(book => {
+      if (OldBooks.includes(book)) {
+      } else {
+        OldBooks.push(book);
+      }
+    });
+  });
+
+  authors.forEach(author => {
+    count = 0;
+    author.books.forEach(book => {
+      if (OldBooks.includes(book)) {
+        count++;
+      }
+    });
+    if (count > OldCount) {
+      MyAuthor = author.name;
+      OldCount = count;
+    }
+  });
+
+  console.log(MyAuthor);
+  return MyAuthor;
 }
 
 module.exports = {
